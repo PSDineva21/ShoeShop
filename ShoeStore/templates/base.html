@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>ShoeStore</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Начало</a> |
+        <a href="{{ url_for('catalog.catalog') }}">Каталог</a> |
+        {% if session.get('user') %}
+            <a href="{{ url_for('auth.logout') }}">Изход</a>
+        {% else %}
+            <a href="{{ url_for('auth.login') }}">Вход</a> |
+            <a href="{{ url_for('auth.register') }}">Регистрация</a>
+        {% endif %}
+    </nav>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul style="color: red;">
+            {% for m in messages %}
+                <li>{{ m }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</body>
+</html>

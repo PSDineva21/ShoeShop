@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="welcome">
+    <h2>Добре дошли в ShoeStore </h2>
+    <p>Вашият онлайн магазин за обувки.</p>
+
+    {% if not session.get("user") %}
+        <div class="auth-buttons">
+            <a href="{{ url_for('auth.register') }}" class="btn">Регистрация</a>
+            <a href="{{ url_for('auth.login') }}" class="btn">Вход</a>
+        </div>
+
+    {% else %}
+        <p>Здравей, <b>{{ session['user']['email'] }}</b>!</p>
+
+        {% if session['user']['is_admin'] %}
+            <a href="{{ url_for('admin.dashboard') }}" class="btn">Admin панел</a>
+            <a href="{{ url_for('catalog.catalog') }}" class="btn">Каталог</a>
+        {% else %}
+
+            <a href="{{ url_for('catalog.catalog') }}" class="btn">Каталог</a>
+            <a href="{{ url_for('cart.view_cart') }}" class="btn">Количка</a>
+        {% endif %}
+
+        <a href="{{ url_for('auth.logout') }}" class="btn">Изход</a>
+    {% endif %}
+</div>
+{% endblock %}

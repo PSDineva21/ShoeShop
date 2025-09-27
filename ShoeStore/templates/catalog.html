@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Каталог</h2>
+
+<ul>
+{% for p in products %}
+    <li>
+        <b>{{ p.name }}</b> - {{ p.description }}<br>
+        Цвят: {{ p.color }} | Наличност: {{ p.stock }} | Цена: {{ p.price }} лв <br>
+
+
+        {% if session.get('user') and not session['user']['is_admin'] %}
+            <form method="post" action="{{ url_for('cart.add_to_cart', product_id=p.id) }}">
+                <label>Избери размер:</label>
+                <select name="size" required>
+                    {% for size in p.sizes %}
+                        <option value="{{ size }}">{{ size }}</option>
+                    {% endfor %}
+                </select>
+                <input type="number" name="quantity" value="1" min="1" style="width:60px">
+                <button type="submit">В количката</button>
+            </form>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

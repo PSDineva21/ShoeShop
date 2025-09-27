@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Финализиране на поръчка</h2>
+<form method="post">
+    <label>Адрес:</label><br>
+    <input type="text" name="address" required><br>
+    <label>Начин на плащане:</label><br>
+    <select name="payment">
+        <option value="Наложен платеж">Наложен платеж</option>
+        <option value="Карта">Онлайн</option>
+    </select><br><br>
+    <button type="submit">Поръчай</button>
+</form>
+{% endblock %}
